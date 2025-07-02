@@ -1,17 +1,14 @@
 import React from "react";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const domain = import.meta.env.VITE_AUTH0_DOMAIN;
-const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
+export default function Profile() {
+  const { user } = useAuth0();
 
-export const AuthProvider = ({ children }) => (
-  <Auth0Provider
-    domain={domain}
-    clientId={clientId}
-    authorizationParams={{
-      redirect_uri: window.location.origin,
-    }}
-  >
-    {children}
-  </Auth0Provider>
-);
+  return (
+    <div>
+      <img src={user.picture} alt="avatar" width="50" />
+      <h2>{user.name}</h2>
+      <p>{user.email}</p>
+    </div>
+  );
+}
